@@ -292,6 +292,9 @@ namespace Programs_Server.Controllers
                             //
 
                             locationEntity.Add(newObject);
+
+                            entity.SaveChanges();
+                            newObject.barcode = newObject.custId.ToString() + "-" + (newObject.nationalityId==null?"" : newObject.nationalityId.ToString()) + "-"+(newObject.departmentId==null?"": newObject.departmentId.ToString());
                             entity.SaveChanges();
                             message = newObject.custId;
                         }
@@ -322,7 +325,8 @@ namespace Programs_Server.Controllers
 
 
                             entity.SaveChanges();
-
+                            tmpObject.barcode = tmpObject.custId.ToString() + "-" + (tmpObject.nationalityId == null ? "" : tmpObject.nationalityId.ToString()) + "-" + (tmpObject.departmentId == null ? "" : tmpObject.departmentId.ToString());
+                            entity.SaveChanges();
                             message = tmpObject.custId;
                         }
                     }
