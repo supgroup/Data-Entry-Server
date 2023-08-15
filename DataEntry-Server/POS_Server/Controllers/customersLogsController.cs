@@ -56,8 +56,6 @@ namespace Programs_Server.Controllers
 
         }
  
- 
-
         // GET api/<controller>
         [HttpPost]
         [Route("GetByID")]
@@ -126,12 +124,14 @@ namespace Programs_Server.Controllers
                 {
                     long res = 0;
                     res = savelog(barcode, type);
-                    return TokenManager.GenerateToken(res.ToString());
+                decimal msg=  decimal.Parse(res.ToString());
+                    return TokenManager.GenerateToken(msg.ToString());
 
                 }
-                catch
+                catch(Exception ex)
                 {
-                    return TokenManager.GenerateToken("0");
+                //    return TokenManager.GenerateToken("0");
+                    return TokenManager.GenerateToken(ex.ToString());
                 }
             }
         }
@@ -307,7 +307,7 @@ namespace Programs_Server.Controllers
                         {
                             var tmpObject = entity.customersLogs.Where(p => p.logId == newObject.logId).FirstOrDefault();
                             // tmpObject.logId = newObject.logId;
-                            tmpObject.logId = newObject.logId;
+                           // tmpObject.logId = newObject.logId;
                             tmpObject.sInDate = newObject.sInDate;
                             tmpObject.sOutDate = newObject.sOutDate;
                             tmpObject.custId = newObject.custId;
@@ -415,20 +415,58 @@ namespace Programs_Server.Controllers
             CustomersLogsModel row = new CustomersLogsModel();
             customersController custcntrlr = new customersController();
             customerModel = custcntrlr.GetByBarcode(barcode);
-            if (type=="in")
-            {
-                //signin
-                customersLogs customersLogs = new customersLogs();
-                customersLogs.custId = customerModel.custId;
 
-                customersLogs.sInDate =DateTime.Now;
-                res= Save(customersLogs);
-            }
-            else
-            {
-                //out
+            if (customerModel is null) {
+                return -4;
+            } else {
 
+                if (type == "in")
+                {
+                    //signin
+                    customersLogs customersLogs = new customersLogs();
+                    customersLogs.custId = customerModel.custId;
+
+                    customersLogs.sInDate = DateTime.Now;
+                    res = Save(customersLogs);
+                }
+                else
+                {
+                    //out
+                    DateTime now = DateTime.Now;
+                    using (dedbEntities entity = new dedbEntities())
+                    {
+                        List<customersLogs> List = entity.customersLogs.Where(S => (long)S.custId == customerModel.custId && S.sOutDate == null).ToList();
+                        if (List != null)
+                        {
+                            //  customersLogs logrow = new customersLogs();
+                            var logrow = List.LastOrDefault();
+
+                            if (((DateTime)logrow.sInDate).Date == now.Date)
+                            {
+                                //can logout
+                                logrow.sOutDate = now;
+                                res = entity.SaveChanges();
+                                //  res=  Save(logrow);
+                                return res;
+                            }
+                            else
+                            {
+                                //return no login today
+                                return -3;
+
+                            }
+
+                        }
+                        else
+                        {
+                            //لم يسجل دخول
+                            return -2;
+                        }
+
+                    }
+                }
             }
+         
             return res;
             
         }
