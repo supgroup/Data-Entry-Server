@@ -13,6 +13,14 @@ namespace Programs_Server.Models
         public Nullable<System.DateTime> sOutDate { get; set; }
         public Nullable<long> posId { get; set; }
         public Nullable<long> custId { get; set; }
+        public string custname { get; set; }
+        public string department { get; set; }
+        public string Nationality { get; set; }
+        public Nullable<long> nationalityId { get; set; }
+        public Nullable<long> departmentId { get; set; }
+
+
+
         public bool canDelete { get; set; }
   
 

@@ -219,6 +219,7 @@
     </Compile>
     <Compile Include="Classes\Calculate.cs" />
     <Compile Include="Classes\Md5Encription.cs" />
+    <Compile Include="Controllers\customersLogsController.cs" />
     <Compile Include="Controllers\nationalitiesController.cs" />
     <Compile Include="Controllers\departmentsController.cs" />
     <Compile Include="Controllers\SettingController.cs" />

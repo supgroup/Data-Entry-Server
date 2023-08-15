@@ -118,14 +118,6 @@ namespace Programs_Server.Controllers
         }
 
       
-        
-
-     
-
-     
-
- 
-
         // GET api/<controller>
         [HttpPost]
         [Route("GetByID")]
@@ -163,9 +155,6 @@ namespace Programs_Server.Controllers
             }
         }
      
-
-
-       
         // add or update location
         [HttpPost]
         [Route("Save")]
@@ -387,10 +376,6 @@ namespace Programs_Server.Controllers
         public  CustomersModel GetByID(long itemId)
         {
 
-
-            CustomersModel item = new CustomersModel();
-
-
             CustomersModel row = new CustomersModel();
             try
             {
@@ -428,6 +413,41 @@ namespace Programs_Server.Controllers
                 //userrow.name = ex.ToString();
                 return row;
             }
+        }
+        public CustomersModel GetByBarcode(string barcode)
+        {
+            CustomersModel row = new CustomersModel();
+          
+                barcode = barcode.Trim();
+                using (dedbEntities entity = new dedbEntities())
+                {
+                    var list = entity.customers.ToList();
+                    row = list.Where(u => u.barcode == barcode)
+                     .Select(S => new CustomersModel()
+                     {
+                         custId = S.custId,
+                         custname = S.custname,
+                       //  lastName = S.lastName,
+                         mobile = S.mobile,
+                        // department = S.department,
+                         barcode = S.barcode,
+                        // printDate = S.printDate,
+                         image = S.image,
+                         notes = S.notes,
+                         //createUserId = S.createUserId,
+                         //updateUserId = S.updateUserId,
+                         //createDate = S.createDate,
+                         //updateDate = S.updateDate,
+                         isActive = S.isActive,
+                         nationalityId = S.nationalityId,
+                         departmentId=S.departmentId,
+
+
+                     }).FirstOrDefault();
+                    return row;
+                }
+
+          
         }
         public  decimal Delete(long id, long signuserId, bool final)
         {
