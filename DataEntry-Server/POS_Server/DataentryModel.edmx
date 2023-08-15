@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DataentryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DataentryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cities">
           <Key>
             <PropertyRef Name="cityId" />
@@ -62,6 +62,7 @@
           </Key>
           <Property Name="departmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="isActive" Type="bit" />
         </EntityType>
         <EntityType Name="error">
           <Key>
@@ -405,8 +406,7 @@
             <End Role="usersLogs" EntitySet="usersLogs" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DataentryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -477,6 +477,7 @@
           <Property Name="departmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="customers" Relationship="Self.FK_customers_departments" FromRole="departments" ToRole="customers" />
+          <Property Name="isActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="error">
           <Key>
@@ -900,6 +901,7 @@
           <EntitySetMapping Name="departments">
             <EntityTypeMapping TypeName="DataentryModel.departments">
               <MappingFragment StoreEntitySet="departments">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="departmentId" ColumnName="departmentId" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>

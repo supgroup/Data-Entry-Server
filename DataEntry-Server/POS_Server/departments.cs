@@ -22,6 +22,7 @@ namespace Programs_Server
     
         public long departmentId { get; set; }
         public string name { get; set; }
+        public Nullable<bool> isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customers> customers { get; set; }

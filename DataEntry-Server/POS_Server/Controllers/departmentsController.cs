@@ -203,7 +203,7 @@ namespace Programs_Server.Controllers
                             {
                                 departmentId = S.departmentId,
                                 name = S.name,
-
+                                isActive=S.isActive,
 
 
                                 canDelete = true,
@@ -264,7 +264,7 @@ namespace Programs_Server.Controllers
                             // tmpObject.departmentId = newObject.departmentId;
                             tmpObject.name = newObject.name;
 
-
+                            tmpObject.isActive = newObject.isActive;
 
                             entity.SaveChanges();
 
@@ -301,7 +301,7 @@ namespace Programs_Server.Controllers
                      {
                          departmentId = S.departmentId,
                          name = S.name,
-
+                         isActive=S.isActive,
 
                      }).FirstOrDefault();
                     return row;
@@ -335,7 +335,7 @@ namespace Programs_Server.Controllers
                             //add
 
                             newObject.name = newitem.name.Trim();
-                            //  newObject.isActive = true;
+                            newObject.isActive = true;
                             locationEntity.Add(newObject);
                             entity.SaveChanges();
                             message = newObject.departmentId;
