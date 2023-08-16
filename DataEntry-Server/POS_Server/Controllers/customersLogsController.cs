@@ -257,7 +257,7 @@ namespace Programs_Server.Controllers
                                 nationalityId = C.nationalityId,
                                 departmentId = C.departmentId,
                                 isActive=C.isActive,
-                            }).ToList();
+                            }).OrderByDescending(x=>x.sInDate).ToList();
 
                     //if (List.Count > 0)
                     //{
