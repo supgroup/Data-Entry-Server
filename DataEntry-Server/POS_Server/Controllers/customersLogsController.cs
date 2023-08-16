@@ -256,6 +256,7 @@ namespace Programs_Server.Controllers
                                 Nationality = NAT.name,
                                 nationalityId = C.nationalityId,
                                 departmentId = C.departmentId,
+                                isActive=C.isActive,
                             }).ToList();
 
                     //if (List.Count > 0)

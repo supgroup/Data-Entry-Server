@@ -19,7 +19,7 @@ namespace Programs_Server.Models
         public Nullable<long> nationalityId { get; set; }
         public Nullable<long> departmentId { get; set; }
 
-
+        public Nullable<bool> isActive { get; set; }
 
         public bool canDelete { get; set; }
   
