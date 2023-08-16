@@ -436,16 +436,36 @@ namespace Programs_Server.Controllers
                     using (dedbEntities entity = new dedbEntities())
                     {
                         List<customersLogs> List = entity.customersLogs.Where(S => (long)S.custId == customerModel.custId && S.sOutDate == null).ToList();
-                        if (List != null)
+                        if (List != null && List.Count>0)
                         {
                             //  customersLogs logrow = new customersLogs();
                             var logrow = List.LastOrDefault();
 
                             if (((DateTime)logrow.sInDate).Date == now.Date)
                             {
-                                //can logout
-                                logrow.sOutDate = now;
+                                List<customersLogs> Listin = entity.customersLogs.Where(S => (long)S.custId == customerModel.custId && S.sOutDate != null).ToList();
+                                bool canout = true;
+                                if (Listin != null && Listin.Count > 0)
+                                {
+                                    var lastoutrow = Listin.LastOrDefault();
+                                    if (lastoutrow.sInDate > logrow.sInDate)
+                                    {
+                                        canout = false;
+                                    }
+
+                                }
+                                if (canout)
+                                {
+      //can logout
+                                    logrow.sOutDate = now;
                                 res = entity.SaveChanges();
+                                }
+                                else
+                                {
+                                    //last login is closed
+                                    res = -2;
+                                }
+                              
                                 //  res=  Save(logrow);
                                 return res;
                             }
